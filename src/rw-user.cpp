@@ -1,4 +1,9 @@
 #include "rw-config.h"
+#include "Subsystems/lift.h"
+#include "Subsystems/claw.h"
+
+
+
 
 // Modify autonomous, driver, or pre-auton code below. src/main.cpp calls these.
 
@@ -16,25 +21,66 @@ double stick(pros::controller_analog_e_t axis) {
 void runDriver() {
   stopChassis(pros::MotorBrake::coast);
   heading_correction = false;
+
+  
+	bool previn = false;
+	bool prevout = false;
+
   while (true) {
-    // default tank drive or replace it with your preferred driver code here:
-    driverTank(stick(pros::E_CONTROLLER_ANALOG_LEFT_Y), stick(pros::E_CONTROLLER_ANALOG_RIGHT_Y));
-    // Arcade on the left stick:           driverArcade(stick(pros::E_CONTROLLER_ANALOG_LEFT_Y), stick(pros::E_CONTROLLER_ANALOG_LEFT_X));
-    // Split arcade (left fwd, right turn): driverArcade(stick(pros::E_CONTROLLER_ANALOG_LEFT_Y), stick(pros::E_CONTROLLER_ANALOG_RIGHT_X));
-    // X-drive, mecanum or H-drive:         driverHolonomic(stick(pros::E_CONTROLLER_ANALOG_LEFT_Y), stick(pros::E_CONTROLLER_ANALOG_LEFT_X),
-    //                                                     stick(pros::E_CONTROLLER_ANALOG_RIGHT_X));  (or driverFieldCentric)
+
+    driverArcade(stick(pros::E_CONTROLLER_ANALOG_LEFT_Y), stick(pros::E_CONTROLLER_ANALOG_RIGHT_X)); //split arcade
     // Tune feel with driver_curve and driver_deadband in src/rw-config.cpp
 
     // Example mechanism: R1 runs the intake, R2 runs it backward
-    if (controller_1.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
-      intake_motor.move_voltage(12000);
-    } else if (controller_1.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
-      intake_motor.move_voltage(-12000);
-    } else {
-      intake_motor.brake();
+    // if (controller_1.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
+    //   intake_motor.move_voltage(12000);
+    // } else if (controller_1.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
+    //   intake_motor.move_voltage(-12000);
+    // } else {
+    //   intake_motor.brake();
+    // }
+
+    bool up = controller_1.get_digital(pros::E_CONTROLLER_DIGITAL_R1);
+    bool down = controller_1.get_digital(pros::E_CONTROLLER_DIGITAL_R2);
+
+    bool in = controller_1.get_digital(pros::E_CONTROLLER_DIGITAL_L1);
+    bool out = controller_1.get_digital(pros::E_CONTROLLER_DIGITAL_L2);
+
+
+    if(up){
+			target += 100;
+      pros::delay(50);
+		}
+
+		if(down){
+			target -= 100;
+			pros::delay(50);
+		}
+
+    if(in) {
+      previn = !previn;
+      prevout = false;
+      pros::delay(250);
+    }
+    if(previn){
+      clawMove(75);
+    } else if(!prevout && !previn) {
+      clawMove(0);
     }
 
-    pros::delay(10);
+    if(out) {
+      prevout = !prevout;
+      previn = false;
+      pros::delay(250);
+    }
+    if(prevout){
+      clawMove(-100);
+    } else if(!prevout && !previn){
+      clawMove(0);
+    }
+
+
+    pros::delay(25);
   }
 }
 
@@ -61,3 +107,5 @@ void runPreAutonomous() {
   addAuton("Drive Calibration", calibrateDrive);  // For the simulator (see the docs: Simulator > Calibrating)
   startAutonSelector();
 }
+
+

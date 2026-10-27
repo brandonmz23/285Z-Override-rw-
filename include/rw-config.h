@@ -16,3 +16,6 @@ void profiledExample();
 void runPreAutonomous();
 void runAutonomous();
 void runDriver();
+
+//lift
+extern PID pid; 

@@ -12,26 +12,26 @@ pros::Controller controller_1(pros::E_CONTROLLER_MASTER);
 // Override (2026-27) rule R11 caps drivetrain motors at 55W total, e.g. 4 x 11W, 5 x 11W, or 4 x 11W + 2 x 5.5W.
 // Drive encoder readings come from the FIRST motor in each group, so with mixed motors
 // list an 11W motor first and set wheel_distance_in for that motor's gearing.
-pros::MotorGroup left_chassis({-1, -2, 3}, pros::MotorGearset::blue);
-pros::MotorGroup right_chassis({4, 5, -6}, pros::MotorGearset::blue);
+pros::MotorGroup left_chassis({14,15}, pros::MotorGearset::blue);
+pros::MotorGroup right_chassis({-16,-13}, pros::MotorGearset::blue);
 // X-drive, mecanum or H-drive: see the docs (Guide > Drive Types) for the motors to make here and
 // the line to add to runPreAutonomous() in src/rw-user.cpp
 
-pros::Imu inertial_sensor(7);
+pros::Imu inertial_sensor(4);
 
 // Tracking wheels (a negative port reverses one). Give them any free ports if you don't use tracking wheels
-pros::Rotation horizontal_tracker(-10);
-pros::Rotation vertical_tracker(-11);
+pros::Rotation horizontal_tracker(2);
+pros::Rotation vertical_tracker(2); //fix
 
 // Distance reset sensors. Give them any free ports if you don't use distance resets
-pros::Distance front_sensor(12);
-pros::Distance left_sensor(13);
-pros::Distance right_sensor(14);
-pros::Distance back_sensor(15);
+pros::Distance front_sensor(5); //free
+pros::Distance left_sensor(20);
+pros::Distance right_sensor(2); //free
+pros::Distance back_sensor(17);
 
 // Your own devices
-pros::Motor intake_motor(-18, pros::MotorGearset::green);
-pros::Distance intake_distance(20);
+
+
 
 // ============================================================================
 // USER-CONFIGURABLE PARAMETERS (CHANGE BEFORE USING THIS TEMPLATE)
@@ -39,18 +39,18 @@ pros::Distance intake_distance(20);
 
 // Distance between the middles of the left and right wheels of the drive (in inches)
 // (mecanum: plus the distance between the front and back wheels, see the docs: Guide > Drive Types)
-double distance_between_wheels = 12.3;
+double distance_between_wheels = 10.5;
 
 // motor to wheel gear ratio * wheel diameter (in inches) * pi
 // (X-drive: also * 0.707, see the docs: Guide > Drive Types)
-double wheel_distance_in = (36.0 / 48.0) * 3.17 * M_PI;
+double wheel_distance_in = (36.0 / 60.0) * 3.25 * M_PI; //wheels prev 3.17
 
 // PID Constants for movement
 // distance_* : Linear PID for straight driving
 // turn_*     : PID for turning in place
 // heading_correction_* : PID for heading correction during linear movement
 double distance_kp = 1.1, distance_ki = 0.1, distance_kd = 7;
-double turn_kp = 0.3, turn_ki = 0, turn_kd = 2.5;
+double turn_kp = 1.08, turn_ki = 0, turn_kd = 7.5;
 double heading_correction_kp = 0.6, heading_correction_ki = 0, heading_correction_kd = 4;
 
 // Enable or disable the use of tracking wheels
@@ -78,14 +78,21 @@ double vertical_tracker_diameter = 1.975; // Diameter of the vertical tracker wh
 double front_sensor_offsetX = 0.0;
 double front_sensor_offsetY = 0.0;
 
-double left_sensor_offsetX = 0.0;
-double left_sensor_offsetY = 0.0;
+double left_sensor_offsetX = -5.75; //fix
+double left_sensor_offsetY = -2.0;
+
+//13.5 x distance
+//12.5 xpos
 
 double right_sensor_offsetX = 0.0;
 double right_sensor_offsetY = 0.0;
 
-double back_sensor_offsetX = 0.0;
-double back_sensor_offsetY = 0.0;
+double back_sensor_offsetX = -3.75; //fix
+double back_sensor_offsetY = -4.0;
+//16 inch y
+//4
+//10.5
+//6
 
 // ============================================================================
 // ADVANCED TUNING (OPTIONAL)
@@ -117,7 +124,7 @@ double chase_power = 2;
 
 // Multiplies the IMU heading. Many V5 IMUs read a little off over full turns (e.g. 357 for 360).
 // Find yours with measureImuScale(), 1.0 = no correction
-double imu_scale = 1.0;
+double imu_scale = 1.00519;
 
 // End a motion early once the robot has been stuck (not moving or turning) for this long, in msec.
 // Saves time if the robot gets caught on something. 0 = off.
@@ -132,13 +139,13 @@ double distance_reset_max_angle = 30;
 double distance_reset_max_jump = 0;
 // Distance resets: skip readings that hit the wall this close to a corner (inches, 0 = off).
 // For Override, about 18 keeps the corner loaders out of the readings
-double distance_reset_corner_margin = 0;
+double distance_reset_corner_margin = 18;
 
 // MCL (see startMcl() in src/rw-user.cpp): particle count (more = smoother but slower, up to 1000),
 // longest distance reading it trusts (inches), and how far behind the distance sensor readings are (msec).
 // If the position lags while driving toward or away from a wall, adjust the delay.
 // The selector screen shows how long each MCL update takes; lower the particle count if it's more than a few msec
-int mcl_particles = 200;
+int mcl_particles = 500; //prev 200
 double mcl_max_range = 60;
 double distance_sensor_delay_msec = 40;
 
@@ -151,9 +158,9 @@ double distance_sensor_scale = 1.0;
 // These use a model of your drive: drive_kS = volts to start moving, drive_kV = volts per in/s,
 // drive_kA = volts per in/s^2. Leave kV and kA at 0 to estimate them from drive_motor_rpm and
 // wheel_distance_in, or measure all three with measureDriveFeedforward()
-double drive_kS = 0.5;
-double drive_kV = 0;
-double drive_kA = 0;
+double drive_kS = 0.488;
+double drive_kV = 0.1776;
+double drive_kA = 0.0465;
 double drive_motor_rpm = 600;          // Drive motor cartridge: 600 (blue), 200 (green), 100 (red)
 double profile_max_speed = 0;          // Top speed (in/s, 0 = 80% of the drive's top speed)
 double profile_max_accel = 100;        // Speed up / slow down rate (in/s^2): lower if the wheels slip
@@ -169,3 +176,7 @@ double driver_deadband = 3;  // Stick values below this (percent) count as zero
 // X-drives, mecanum drives and H-drives (see the docs: Guide > Drive Types): how far the robot moves
 // sideways per revolution of a strafing motor (inches). 0 = the same as wheel_distance_in, right for an X-drive
 double strafe_distance_in = 0;
+
+
+//rw pid for lift
+PID pid (.7,0,0.00); //.7 motor en

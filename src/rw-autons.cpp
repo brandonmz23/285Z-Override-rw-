@@ -32,28 +32,70 @@ void exampleAuton2() {
  * Shows background motions: start a move, run the intake while it drives, and stop it early with a sensor.
  */
 void asyncExample() {
-  setPose(0, 0, 0);
+//   setPose(0, 0, 0);
 
-  // Start driving in the background, then start the intake 12 inches into the move
-  runAsync([]{ moveToPoint(0, 48, 1, 3000); });
-  waitUntilTraveled(12);
-  intake_motor.move_voltage(12000);
+//   // Start driving in the background, then start the intake 12 inches into the move
+//   runAsync([]{ moveToPoint(0, 48, 1, 3000); });
+//   waitUntilTraveled(12);
+//   intake_motor.move_voltage(12000);
 
-  // Stop the move early once the intake sensor sees an object
-  while (isMotionRunning() && intake_distance.get() >= 50) {
-    pros::delay(5);
-  }
-  cancelMotion();
-  waitForMotion();
-  intake_motor.brake();
+//   // Stop the move early once the intake sensor sees an object
+//   while (isMotionRunning() && intake_distance.get() >= 50) {
+//     pros::delay(5);
+//   }
+//   cancelMotion();
+//   waitForMotion();
+//   intake_motor.brake();
 
-  // Turn around and drive back
-  runAsync([]{
-    turnToAngle(180, 1500);
-    moveToPoint(0, 0, 1, 3000);
-  });
-  waitForMotion();
+//   // Turn around and drive back
+//   runAsync([]{
+//     turnToAngle(180, 1500);
+//     moveToPoint(0, 0, 1, 3000);
+//   });
+//   waitForMotion();
+
+    //measureDriveFeedforward();
+   // measureImuScale(10);
+   //turnToAngle(90,1000);
+   setPose(0,0,0);
+   moveToPoint(0,24,1,1000);
+   waitForMotion();
+   moveToPoint(0,0,-1,1000);
+   waitForMotion();
+   turnToAngle(90,1000);
+   waitForMotion();
+   moveToPoint(6,0,1,1000);
+   turnToAngle(0,1000);
+   waitForMotion();
+   moveToPoint(6,24,1,1000);
+   waitForMotion();
+   moveToPoint(6,0,-1,1000);
+   waitForMotion();
+   turnToAngle(-90,1000);
+   waitForMotion();
+   moveToPoint(0,0,1,1000);
+   waitForMotion();
+   turnToAngle(0,1000);
+   waitForMotion();
+  
+
 }
+
+void UTright(){
+  setPose(0,0,90);
+  moveToPoint(6,0,1,500);
+  moveToPoint(-1,0,-1,500);
+  moveToPoint(6,0,1,500);
+  moveToPoint(-1,0,-1,500);
+  setPose(0,0,90);
+  moveToPoint(44,0,1,500);
+  turnToAngle(180,500);
+  moveToPoint(44,-28,1,500);
+  moveToPoint(44,-16,-11,500);
+}
+
+
+
 
 /*
  * pathExample

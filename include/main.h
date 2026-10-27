@@ -70,6 +70,8 @@ void opcontrol(void);
 }
 #endif
 
+extern int error, target;
+
 #ifdef __cplusplus
 /**
  * You can add C++-only headers here
