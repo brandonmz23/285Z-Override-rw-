@@ -11,11 +11,14 @@ void exampleAuton2();
 void asyncExample();
 void pathExample();
 void profiledExample();
+void UTright();
+void UTskills();
 
 // Called from src/main.cpp (src/rw-user.cpp)
 void runPreAutonomous();
 void runAutonomous();
 void runDriver();
+
 
 //lift
 extern PID pid; 

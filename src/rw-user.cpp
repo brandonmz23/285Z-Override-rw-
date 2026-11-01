@@ -48,35 +48,54 @@ void runDriver() {
 
 
     if(up){
-			target += 100;
-      pros::delay(50);
+			target += 70;
+      if(target >3500){
+        target = 3500;
+      }
+      pros::delay(20);
+      
 		}
 
 		if(down){
-			target -= 100;
-			pros::delay(50);
+			target -= 70;
+      if(target <0){
+        target = 0;
+      }
+			pros::delay(20);
 		}
 
-    if(in) {
-      previn = !previn;
-      prevout = false;
-      pros::delay(250);
-    }
-    if(previn){
+    // if(in) {
+    //   previn = !previn;
+    //   prevout = false;
+    //   pros::delay(250);
+    // }
+    // if(previn){
+    //   clawMove(75);
+    // } else if(!prevout && !previn) {
+    //   clawMove(0);
+    // }
+
+    // if(out) {
+    //   prevout = !prevout;
+    //   previn = false;
+    //   pros::delay(250);
+    // }
+    // if(prevout){
+    //   clawMove(-127);
+    // } else if(!prevout && !previn){
+    //   clawMove(0); 
+    // }
+
+    if(in){
       clawMove(75);
-    } else if(!prevout && !previn) {
-      clawMove(0);
+    } else if(!in && !out) {
+      clawMove(20);
     }
 
-    if(out) {
-      prevout = !prevout;
-      previn = false;
-      pros::delay(250);
-    }
-    if(prevout){
-      clawMove(-100);
-    } else if(!prevout && !previn){
-      clawMove(0);
+    if(out){
+      clawMove(-127);
+    } else if (!in && !out){
+      clawMove(20);
     }
 
 
@@ -96,9 +115,11 @@ void runPreAutonomous() {
 
   // Optional: MCL uses the distance sensors to keep odometry from drifting while driving.
   // Needs field-centered coordinates, so start each auton with setPose() at the real field position.
-  // startMcl();
+  //startMcl();
 
   // Autonomous routines for the selector, in the order they appear on the Brain screen
+  addAuton("UTskills",UTskills);
+  addAuton("UTRight",UTright);
   addAuton("Tuning Test", exampleAuton);
   addAuton("Odom Test", exampleAuton2);
   addAuton("Async Example", asyncExample);

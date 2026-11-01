@@ -1,4 +1,8 @@
 #include "rw-config.h"
+#include "main.h"
+#include "Subsystems/claw.h"
+#include <chrono>
+#include <thread>
 
 // IMPORTANT: Remember to add respective function declarations to include/rw-config.h
 // Then add each routine to the auton selector with addAuton() in runPreAutonomous() (src/rw-user.cpp)
@@ -56,46 +60,169 @@ void asyncExample() {
 
     //measureDriveFeedforward();
    // measureImuScale(10);
-   //turnToAngle(90,1000);
-   setPose(0,0,0);
-   moveToPoint(0,24,1,1000);
-   waitForMotion();
-   moveToPoint(0,0,-1,1000);
-   waitForMotion();
-   turnToAngle(90,1000);
-   waitForMotion();
-   moveToPoint(6,0,1,1000);
-   turnToAngle(0,1000);
-   waitForMotion();
-   moveToPoint(6,24,1,1000);
-   waitForMotion();
-   moveToPoint(6,0,-1,1000);
-   waitForMotion();
-   turnToAngle(-90,1000);
-   waitForMotion();
-   moveToPoint(0,0,1,1000);
-   waitForMotion();
-   turnToAngle(0,1000);
-   waitForMotion();
-  
 
+  //turnToAngle(90,1000);
+
+  setPose(-62,8,90);
+  moveToPoint(-50,8,1,1000,6);
+  target = 500;
+  pros::delay(500);
+  target = 0;
+  pros::delay(100);
+  moveToPoint(-62,8,-1,1000);
+  moveToPoint(-50,8,1,1000);
+
+
+  moveToPoint(-62,8,-1,1000); //start from toggle
+  moveToPoint(-45,8,1,1000);
+  turnToAngle(180,1500,true,3);
+  target = 500;
+  pros::delay(500);
+  moveToPoint(-46,-22,1,1000,true, 6);
+  target = 0;
+  pros::delay(700);
+  clawMove(-127);
+  pros::delay(500);
+  clawMove(0);
+  
 }
+
 
 void UTright(){
   setPose(0,0,90);
-  moveToPoint(6,0,1,500);
-  moveToPoint(-1,0,-1,500);
-  moveToPoint(6,0,1,500);
-  moveToPoint(-1,0,-1,500);
+  clawMove(100);
+  moveToPoint(10,0,1,1000, true, 12);
+  pros::delay(500);
+  target = 1500;
+  pros::delay(500);
+  target = -50;
+  pros::delay(500);
+  moveToPoint(-1,0,-1,1000,true, 12);
+  moveToPoint(10,0,1,1000,true, 12);
+  moveToPoint(-1,0,-1,1000,true, 12);
   setPose(0,0,90);
-  moveToPoint(44,0,1,500);
-  turnToAngle(180,500);
-  moveToPoint(44,-28,1,500);
-  moveToPoint(44,-16,-11,500);
+  clawMove(100);
+  target = 600;
+  moveToPoint(14,0,1,1000,true, 10);
+  turnToAngle(180,500,true, 8);
+  moveToPoint(14,-28,1,500,false, 6);
+  pros::delay(650);
+  moveToPoint(14,-25,-1, 1000, true,8);
+  target = 0;
+  pros::delay(600);
+  clawMove(-127);
+  pros::delay(700);
+  moveToPoint(14,-12,-1,1000,true, 6);
+
+
+  //turnToPoint(32,-32, 1, 1000); // angle it to 45
+  turnToAngle(120,5000);
+  clawMove(127);
+  //driveProfiled(25,1000, true, 12);
+  moveToPoint(32,-32, 1, 550,10); 
+  driveProfiled(10,1500, true, 6);
+  pros::delay(500);
+  // target = 800; 
+  // pros::delay(500);
+  // //driveProfiled(3,200, true, 10);
+  // turnToAngle(0,500,true, 6);
+  // // driveProfiled(16, 1000, true, 12);
+  // setPose(0,0,270);
+  // moveToPoint(-16,-2, 1, 1000,10); 
+  // pros::delay(150);
+  // target = 300;
+  // pros::delay(300);
+  // clawMove(-127);
+  // pros::delay(300);
+  // driveProfiled(-5, 5000);
+
+  // setPose(0,0,180);
+  // target = 0;
+  // turnToAngle(90,100);
+  // pros::delay(300);
+
+  // moveToPoint(0,0, 1, 550,12); 
+  // moveToPoint(6,0, 1, 550,12); 
+  // moveToPoint(-999,0, 1, 550,12); 
+  // moveToPoint(6,0, 1, 550,12); 
+
+  
+  
+
+
+
+
+ 
+
 }
 
 
 
+void UTskills(){
+  setPose(0,0,90);
+  clawMove(120);
+  moveToPoint(10,0,1,1000, true, 12);
+  // pros::delay(500);
+  // target = 800;
+  // pros::delay(500);
+  // target= 400;
+  for(int x = 1800; x > 0; x-=10){
+    target = x; 
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+  }
+  pros::delay(500);
+  target = -50;
+  pros::delay(500);
+  moveToPoint(-1,0,-1,1000,true, 12);
+  moveToPoint(10,0,1,1000,true, 12);
+  moveToPoint(-1,0,-1,1000,true, 12);
+  setPose(0,0,90);
+  clawMove(100);
+  target = 400;
+  moveToPoint(14,0,1,1000,true, 10);
+  turnToAngle(180,500,true, 8);
+  moveToPoint(14,-30,1,1000,true, 6);
+  pros::delay(300);
+  setPose(14,-28,180);
+  pros::delay(650);
+  moveToPoint(14,-27,-1, 1000, true,8);
+  clawMove(75);
+  target = 80;
+  pros::delay(600);
+  clawMove(-127);
+  pros::delay(700); 
+  moveToPoint(14,-12,-1,1000,true, 6);
+  turnToAngle(120,5000);
+  clawMove(127);
+  moveToPoint(32,-32, 1, 550,10); 
+  driveProfiled(10,1500, true, 6);
+  pros::delay(500); 
+  driveProfiled(10,500, true, 12);
+
+  //extend from auto
+  turnToAngle(270,1000,true, 8);
+  pros::delay(500); 
+  setPose(0,0,270);
+  target = 800; 
+  pros::delay(300);
+  moveToPoint(-20,0, 1, 800,true, 8); 
+  pros::delay(300);
+  target = 300;
+  pros::delay(300);
+  clawMove(-127);
+  pros::delay(2000);
+  driveProfiled(-30,2000, true, 12);
+  turnToAngle(0,1000,true, 8);
+  driveProfiled(30,2000, true, 12);
+
+
+
+  // setPose(0,0,270);
+  // moveToPoint(12,0, 1, 800,true, 8); 
+  // turnToAngle(120,5000);
+
+
+}
 
 /*
  * pathExample
@@ -103,11 +230,24 @@ void UTright(){
  * Paths use field coordinates, so the auton starts with setPose().
  */
 void pathExample() {
-  setPose(-36, -60, 0);
-  Path out = pathFromPoints({{-36, -60}, {-36, -32}, {-12, -22}, {12, -30}, {34, -24}});
-  followPath(out, 5000);
-  Path back = pathFromPoints({{34, -24}, {12, -30}, {-12, -22}, {-36, -32}, {-36, -52}});
-  followPathRamsete(back, 5000, true);
+  // setPose(-36, -60, 0);
+  // Path out = pathFromPoints({{-36, -60}, {-36, -32}, {-12, -22}, {12, -30}, {34, -24}});
+  // followPath(out, 5000);
+  // Path back = pathFromPoints({{34, -24}, {12, -30}, {-12, -22}, {-36, -32}, {-36, -52}});
+  // followPathRamsete(back, 5000, true);
+
+  setPose(0,0,90);
+  // clawMove(100);
+  moveToPoint(12,0,1,1000, true, 12);
+  pros::delay(1500);
+  target = 2000;
+  pros::delay(1500);
+  target = 0;
+  pros::delay(500);
+  moveToPoint(-3,0,-1,1000,true, 12);
+  moveToPoint(12,0,1,1000,true, 12);
+  moveToPoint(-3,0,-1,1000,true, 12);
+
 }
 
 /*

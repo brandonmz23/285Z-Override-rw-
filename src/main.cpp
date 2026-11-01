@@ -11,15 +11,16 @@ void runPIDlift(void* x){
 		pid.setTarget(target);
         double output = pid.update(pos); // upd with error
         lift(output);
-        pros::delay(25); 
+        pros::delay(10); 
     }
 }
 
 
 void initialize(){
-
+pros::Task liftPid(runPIDlift,(void*)0);
 	runPreAutonomous();
-pros::Task liftPid(runPIDlift,(void*)0);}
+
+}
 
 void disabled(){}
 
