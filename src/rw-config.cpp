@@ -20,13 +20,13 @@ pros::MotorGroup right_chassis({-16,-13}, pros::MotorGearset::blue);
 pros::Imu inertial_sensor(4);
 
 // Tracking wheels (a negative port reverses one). Give them any free ports if you don't use tracking wheels
-pros::Rotation horizontal_tracker(2);
-pros::Rotation vertical_tracker(2); //fix
+pros::Rotation horizontal_tracker(5);
+pros::Rotation vertical_tracker(5); //fix
 
 // Distance reset sensors. Give them any free ports if you don't use distance resets
 pros::Distance front_sensor(5); //free
 pros::Distance left_sensor(20);
-pros::Distance right_sensor(2); //free
+pros::Distance right_sensor(5); //free
 pros::Distance back_sensor(17);
 
 // Your own devices
@@ -88,7 +88,7 @@ double right_sensor_offsetX = 0.0;
 double right_sensor_offsetY = 0.0;
 
 double back_sensor_offsetX = -3.75; //fix
-double back_sensor_offsetY = -4.0;
+double back_sensor_offsetY = -4.0; //-4.0
 //16 inch y
 //4
 //10.5

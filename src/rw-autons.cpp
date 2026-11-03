@@ -74,11 +74,11 @@ void asyncExample() {
 
 
   moveToPoint(-62,8,-1,1000); //start from toggle
-  moveToPoint(-45,8,1,1000);
-  turnToAngle(180,1500,true,3);
+  moveToPoint(-48,8,1,1000);
+  turnToAngle(180,1500,true);
   target = 500;
   pros::delay(500);
-  moveToPoint(-46,-22,1,1000,true, 6);
+  moveToPoint(-48,-18,1,1000,true);
   target = 0;
   pros::delay(700);
   clawMove(-127);

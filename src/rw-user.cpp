@@ -115,14 +115,14 @@ void runPreAutonomous() {
 
   // Optional: MCL uses the distance sensors to keep odometry from drifting while driving.
   // Needs field-centered coordinates, so start each auton with setPose() at the real field position.
-  //startMcl();
+  startMcl();
 
   // Autonomous routines for the selector, in the order they appear on the Brain screen
+  addAuton("Async Example", asyncExample);
   addAuton("UTskills",UTskills);
   addAuton("UTRight",UTright);
   addAuton("Tuning Test", exampleAuton);
   addAuton("Odom Test", exampleAuton2);
-  addAuton("Async Example", asyncExample);
   addAuton("Path Example", pathExample);
   addAuton("Profiled Example", profiledExample);
   addAuton("Drive Calibration", calibrateDrive);  // For the simulator (see the docs: Simulator > Calibrating)
