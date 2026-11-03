@@ -64,8 +64,9 @@ void asyncExample() {
   //turnToAngle(90,1000);
 
   setPose(-62,8,90);
+  clawMove(100);
   moveToPoint(-50,8,1,1000,6);
-  target = 500;
+  target = 1000;
   pros::delay(500);
   target = 0;
   pros::delay(100);
@@ -79,12 +80,31 @@ void asyncExample() {
   target = 500;
   pros::delay(500);
   moveToPoint(-48,-18,1,1000,true);
+
   target = 0;
   pros::delay(700);
   clawMove(-127);
   pros::delay(500);
   clawMove(0);
+  resetPositionBack(); // reset y using the back distance sensor may not work
+  moveToPoint(-48,-12,1,1000,true);
+
+  boomerang(-28, -17, 1, 145, 0.5, 3000);
+  // turnToPoint(-24,-24, 1,1000);
+  // moveToPoint(-28,-17,1,1000,true);   
   
+  
+  clawMove(127);
+  driveTo(5,1000,true, 4 ); //driveProfiled(5,1000,1,true, 4 ); alt
+  turnToPoint(-24,-24, 1,1000);
+  moveToPoint (-24,-24,1,1000,true);
+  target = 800;
+  pros::delay(500);
+  moveToPoint(-41,-24,1,1000,true);
+  moveToPoint(-24,-24, -1,1000, true);
+  turnToPoint(-46,-46, 1,1000);
+  moveToPoint(-42,-42, 1,1000);
+
 }
 
 
