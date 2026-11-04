@@ -64,17 +64,17 @@ void asyncExample() {
   //turnToAngle(90,1000);
 
   setPose(-62,8,90);
-  clawMove(100);
-  moveToPoint(-50,8,1,1000,6);
-  target = 1000;
-  pros::delay(500);
-  target = 0;
-  pros::delay(100);
-  moveToPoint(-62,8,-1,1000);
-  moveToPoint(-50,8,1,1000);
+  // clawMove(100);
+  // moveToPoint(-50,8,1,1000,6);
+  // target = 1000;
+  // pros::delay(500);
+  // target = 0;
+  // pros::delay(100);
+  // moveToPoint(-62,8,-1,1000);
+  // moveToPoint(-50,8,1,1000);
 
 
-  moveToPoint(-62,8,-1,1000); //start from toggle
+  // moveToPoint(-62,8,-1,1000); //start from toggle
   moveToPoint(-48,8,1,1000);
   turnToAngle(180,1500,true);
   target = 500;
@@ -86,24 +86,53 @@ void asyncExample() {
   clawMove(-127);
   pros::delay(500);
   clawMove(0);
-  resetPositionBack(); // reset y using the back distance sensor may not work
-  moveToPoint(-48,-12,1,1000,true);
+  //resetPositionBack(); // reset y using the back distance sensor may not work
+  moveToPoint(-48,-12,-1,1000,true);
 
-  boomerang(-28, -17, 1, 145, 0.5, 3000);
-  // turnToPoint(-24,-24, 1,1000);
-  // moveToPoint(-28,-17,1,1000,true);   
+  turnToPoint(-24,-24, 1,1000);
+  driveProfiled(18,1000);
   
   
   clawMove(127);
-  driveTo(5,1000,true, 4 ); //driveProfiled(5,1000,1,true, 4 ); alt
-  turnToPoint(-24,-24, 1,1000);
-  moveToPoint (-24,-24,1,1000,true);
+  driveProfiled(10,1000,true, 4 ); //driveProfiled(5,1000,1,true, 4 ); alt
   target = 800;
   pros::delay(500);
-  moveToPoint(-41,-24,1,1000,true);
-  moveToPoint(-24,-24, -1,1000, true);
-  turnToPoint(-46,-46, 1,1000);
-  moveToPoint(-42,-42, 1,1000);
+  moveToPoint(-24,-24, 1,1000);
+  turnToPoint(-47,-24, 1,1000);
+  moveToPoint(-42,-24, 1,1000);
+  pros::delay(200);
+  target = 300;
+  pros::delay(300);
+  clawMove(-127);
+  pros::delay(300);
+  moveToPoint(-24,-24, -1,1000);
+  target = 0;
+  turnToPoint(-44,-44, 1,1000);
+  clawMove(127);
+  moveToPoint(-44,-44, 1,1000);
+  driveProfiled(10,1000,true, 4 ); //driveProfiled(5,1000,1,true, 4 ); alt
+  turnToPoint(-47,-24, 1,1000);
+  target = 1300;
+  moveToPoint(-47,-32, 1,1000);
+  pros::delay(300);
+  target = 1000;
+  clawMove(-127);
+  moveToPoint(-47,-58, -1,1000);
+  turnToAngle(0,1000);
+  moveToPoint(-60,-58, 1,1000);
+
+
+
+
+
+
+
+  
+
+  
+  // moveToPoint(-24,-24, -1,1000, true);
+  // turnToPoint(-46,-46, 1,1000);
+  // moveToPoint(-42,-42, 1,1000);
 
 }
 
