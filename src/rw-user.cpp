@@ -1,6 +1,8 @@
 #include "rw-config.h"
 #include "Subsystems/lift.h"
 #include "Subsystems/claw.h"
+#include "Subsystems/toggle.h"
+
 
 
 
@@ -45,6 +47,9 @@ void runDriver() {
 
     bool in = controller_1.get_digital(pros::E_CONTROLLER_DIGITAL_L1);
     bool out = controller_1.get_digital(pros::E_CONTROLLER_DIGITAL_L2);
+
+    bool buta = controller_1.get_digital(pros::E_CONTROLLER_DIGITAL_A);
+
 
 
     if(up){
@@ -96,6 +101,12 @@ void runDriver() {
       clawMove(-127);
     } else if (!in && !out){
       clawMove(20);
+    }
+
+    if(buta){
+      toggle(75);
+    } else if(!buta) {
+      toggle(0);
     }
 
 
